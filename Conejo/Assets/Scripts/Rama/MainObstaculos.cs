@@ -6,8 +6,10 @@ public class MainObstaculos : MonoBehaviour
 {
     public ControllerRama controllerRama;
     public ControllerExcarvar controllerExcarvar;
+    public ControllerCountRoot controllerCountRoot;
     public bool initRama;
     public bool initExcarvar;
+    public bool initRoot;
     GameObject playerObject;
     Player player;
     GameObject camera;
@@ -36,6 +38,27 @@ public class MainObstaculos : MonoBehaviour
         {
             InitObstaculeExcarvar();
         }
+        if(initRoot)
+        {
+            InitObstaculeRoot();
+        }
+    }
+    public void InitObstaculeRoot()
+    {
+        var alphaRaiz = controllerCountRoot.GetComponent<CanvasGroup>().alpha;
+
+        alphaRaiz = Mathf.Lerp(alphaRaiz, 1f, controllerExcarvar.softened * Time.deltaTime);
+
+        if (alphaRaiz >= 0.8f)
+        {
+            //alphaText.a = 1f;
+            alphaRaiz = 1f;
+            controllerCountRoot.GetComponent<CanvasGroup>().interactable = true;
+            controllerCountRoot.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            initRoot = false;
+        }
+        // Debug.Log(alphaBallon);
+        controllerCountRoot.GetComponent<CanvasGroup>().alpha = alphaRaiz;
     }
     public void InitObstaculeExcarvar()
     {

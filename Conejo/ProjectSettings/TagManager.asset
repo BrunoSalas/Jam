@@ -15,6 +15,7 @@ TagManager:
   - PanelDialogue
   - Veterraga
   - Kion
+  - RaizObstacule
   layers:
   - Default
   - TransparentFX

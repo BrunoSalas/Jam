@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public GameObject rama;
     [HideInInspector]
     public GameObject tierra;
+    [HideInInspector]
+    public GameObject raiz;
     public int vida;
     MainObstaculos mainObstaculos;
     // Start is called before the first frame update
@@ -76,7 +78,14 @@ public class Player : MonoBehaviour
             mainObstaculos.controllerExcarvar.controllerCount.init = true;
             tierra = other.gameObject;
         }
-        if(other.CompareTag("Hazard"))
+        if (other.CompareTag("RaizObstacule"))
+        {
+            navMesh.speed = 0;
+            mainObstaculos.initRoot = true;
+            mainObstaculos.controllerCountRoot.init = true;
+            raiz = other.gameObject;
+        }
+        if (other.CompareTag("Hazard"))
         {
             vida--;
         }
