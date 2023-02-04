@@ -27,7 +27,7 @@ public class Zonas : MonoBehaviour
     IEnumerator LayerAsign()
     {
         yield return new WaitForSeconds(2);
-        gameObject.layer = LayerMask.NameToLayer("Punto");
+        gameObject.layer = LayerMask.NameToLayer("Camino");
     }
     public IEnumerator NeblinaFadeIn()
     {

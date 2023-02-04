@@ -7,12 +7,17 @@ public class Player : MonoBehaviour
 {
     public NavMeshAgent navMesh;
     public int zanahoria;
+    public int veterraga;
+    public int kion;
     [SerializeField]
     LayerMask suelo;
     public GameObject zona;
     GameObject mainObstac;
     [HideInInspector]
     public GameObject rama;
+    [HideInInspector]
+    public GameObject tierra;
+    public int vida;
     MainObstaculos mainObstaculos;
     // Start is called before the first frame update
     void Start()
@@ -27,14 +32,14 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position,Vector3.down,out hit,2f,suelo))
         {
-            zona = hit.collider.gameObject;
             if(hit.collider.gameObject.tag == "Zonas")
             {
 
+                zona = hit.collider.gameObject;
             }
             if (hit.collider.gameObject.tag == "ZonasMedias")
             {
-
+                hit.collider.gameObject.GetComponent<zonaMedia>().encima = true;
             }
         }
 
@@ -45,6 +50,17 @@ public class Player : MonoBehaviour
         if(other.CompareTag("Zanahoria"))
         {
             zanahoria += 1;
+            Destroy(other.gameObject);
+        }
+        if (other.CompareTag("Kion"))
+        {
+            kion += 1;
+            Destroy(other.gameObject);
+        }
+        if (other.CompareTag("Veterraga"))
+        {
+            veterraga += 1;
+            Destroy(other.gameObject);
         }
         if (other.CompareTag("RamaObstacule"))
         {
@@ -52,6 +68,17 @@ public class Player : MonoBehaviour
             mainObstaculos.initRama = true;
             mainObstaculos.controllerRama.sliderController.init = true;
             rama = other.gameObject;
+        }
+        if(other.CompareTag("ExcarvarObstacule"))
+        {
+            navMesh.speed = 0;
+            mainObstaculos.initExcarvar = true;
+            mainObstaculos.controllerExcarvar.controllerCount.init = true;
+            tierra = other.gameObject;
+        }
+        if(other.CompareTag("Hazard"))
+        {
+            vida--;
         }
     }
     private void OnTriggerExit(Collider other)

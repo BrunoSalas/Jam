@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ControllerRama : MonoBehaviour
+public class ControllerExcarvar : MonoBehaviour
 {
-    public SliderController sliderController;
+    public ControllerCount controllerCount;
+    public MainObstaculos mainObstaculos;
     GameObject playerObject;
     Player player;
     [HideInInspector]
-    public CanvasGroup rama;
+    public CanvasGroup excarvar;
     public float softened;
     public bool paso;
     bool desaparecer;
-    public GameObject ramaObject;
+    public GameObject tierraObject;
     // Start is called before the first frame update
     void Start()
     {
-        rama = GetComponent<CanvasGroup>();
+        excarvar = GetComponent<CanvasGroup>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
         player = playerObject.GetComponent<Player>();
     }
@@ -25,18 +25,23 @@ public class ControllerRama : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(rama.alpha > 0)
+        if (excarvar.alpha > 0)
         {
-            paso = sliderController.pasar;
+            paso = controllerCount.paso;
             if (paso)
                 StartCoroutine(Destroy());
+            if(!paso && controllerCount.atrasPaso)
+            {
+                mainObstaculos.Comprobante();
+            }
+
 
 
         }
-        else
+        else 
         {
-            rama.blocksRaycasts = false;
-            rama.interactable = false;
+            excarvar.blocksRaycasts = false;
+            excarvar.interactable = false;
         }
         if (desaparecer)
         {
@@ -47,39 +52,40 @@ public class ControllerRama : MonoBehaviour
 
 
         }
+        if(!controllerCount.init)
+        {
+
+            StartCoroutine(Disappear());
+        }
     }
     public void DisappearObstacule()
     {
 
-        var alphaRama = rama.GetComponent<CanvasGroup>().alpha;
+        var alphatierra = excarvar.GetComponent<CanvasGroup>().alpha;
 
         //var alphaBallon = ballonAlpha.GetComponent<RawImage>().color;
 
         // var alphaText = textAlpha.GetComponent<Text>().color;
-        
-        alphaRama = Mathf.Lerp(alphaRama, 0f, softened * Time.deltaTime);
-        if (alphaRama <= 0.1f)
+
+        alphatierra = Mathf.Lerp(alphatierra, 0f, softened * Time.deltaTime);
+        if (alphatierra <= 0.1f)
         {
-            alphaRama = 0f;
+            alphatierra = 0f;
             desaparecer = false;
-            sliderController.detenerse = false;
         }
         //alphaText.a = 0f;
-        rama.GetComponent<CanvasGroup>().alpha = alphaRama;
+        excarvar.GetComponent<CanvasGroup>().alpha = alphatierra;
         //textAlpha.GetComponent<Text>().color = alphaText;
     }
-    public void hola()
+    public IEnumerator Disappear()
     {
-        StartCoroutine(Disappear());
-    }
-    public  IEnumerator Disappear()
-    {
-        yield return new WaitForSeconds(0.5f);desaparecer = true;
+        yield return new WaitForSeconds(0.5f); desaparecer = true;
 
     }
     IEnumerator Destroy()
     {
         yield return new WaitForSeconds(0.5f);
-        Destroy(player.rama);
+        Destroy(player.tierra);
+        mainObstaculos.Comprobante();
     }
 }

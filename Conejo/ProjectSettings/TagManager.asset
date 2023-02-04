@@ -8,18 +8,25 @@ TagManager:
   - Zanahoria
   - MainObstacule
   - RamaObstacule
+  - Zonas
+  - ZonasMedias
+  - ExcarvarObstacule
+  - Hazard
+  - PanelDialogue
+  - Veterraga
+  - Kion
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Punto
+  - 
   - Water
   - UI
   - Player
   - Ignorar
   - RamaObstacule
   - Camino
-  - 
+  - Sendero
   - 
   - 
   - 

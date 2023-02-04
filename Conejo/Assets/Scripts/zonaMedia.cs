@@ -15,10 +15,6 @@ public class zonaMedia : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(encima)
-        {
-            StartCoroutine(NeblinaFadeIn());
-        }
     }
     public IEnumerator NeblinaFadeIn()
     {
@@ -38,5 +34,20 @@ public class zonaMedia : MonoBehaviour
         }
 
         yield return null;
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            encima = true;
+            StartCoroutine(NeblinaFadeIn());
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            encima = false;
+        }
     }
 }

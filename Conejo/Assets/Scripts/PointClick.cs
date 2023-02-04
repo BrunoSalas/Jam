@@ -34,6 +34,7 @@ public class PointClick : MonoBehaviour
         {
             for (int i = 0; i < player.zona.GetComponent<Zonas>().zonas.Length; i++)
             {
+                Debug.Log(hit.collider.name);
                 if(hit.collider.gameObject == player.zona.GetComponent<Zonas>().zonas[i])
                 {
                     anterior = player.zona;
