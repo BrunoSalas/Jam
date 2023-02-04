@@ -28,6 +28,14 @@ public class Player : MonoBehaviour
         if(Physics.Raycast(transform.position,Vector3.down,out hit,2f,suelo))
         {
             zona = hit.collider.gameObject;
+            if(hit.collider.gameObject.tag == "Zonas")
+            {
+
+            }
+            if (hit.collider.gameObject.tag == "ZonasMedias")
+            {
+
+            }
         }
 
     }
@@ -46,5 +54,11 @@ public class Player : MonoBehaviour
             rama = other.gameObject;
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("RamaObstacule"))
+        {
+            mainObstaculos.controllerRama.sliderController.init = false;
+        }
+    }
 }

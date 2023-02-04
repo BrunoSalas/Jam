@@ -12,7 +12,6 @@ public class ControllerRama : MonoBehaviour
     [HideInInspector]
     public CanvasGroup rama;
     public float softened;
-    [HideInInspector]
     public bool paso;
     bool desaparecer;
     public GameObject ramaObject;
@@ -29,9 +28,11 @@ public class ControllerRama : MonoBehaviour
     {
         if(rama.alpha > 0)
         {
-            paso = sliderController.fallo;
+            paso = sliderController.pasar;
+            if (paso)
+                StartCoroutine(Destroy());
 
-            
+
         }
         else
         {
@@ -63,8 +64,6 @@ public class ControllerRama : MonoBehaviour
             alphaRama = 0f;
             desaparecer = false;
             sliderController.detenerse = false;
-            if(paso)
-                StartCoroutine(Destroy());
         }
         //alphaText.a = 0f;
         rama.GetComponent<CanvasGroup>().alpha = alphaRama;

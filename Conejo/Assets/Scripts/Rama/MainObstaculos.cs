@@ -11,6 +11,7 @@ public class MainObstaculos : MonoBehaviour
     Player player;
     GameObject camera;
     PointClick pointClick;
+    [SerializeField]
     bool ramaPaso;
     // Start is called before the first frame update
     void Start()
@@ -54,11 +55,18 @@ public class MainObstaculos : MonoBehaviour
         //ballonAlpha.GetComponent<RawImage>().color = alphaBallon;
         //textAlpha.GetComponent<Text>().color = alphaText;
     }
-    public void ComprobanteRama()
+    public void Boton()
     {
-       ramaPaso  = controllerRama.paso;
-        if(ramaPaso)
+        StartCoroutine(Comprobar());
+      
+    }
+    IEnumerator Comprobar()
+    {
+        yield return new WaitForSeconds(0.5f);
+        ramaPaso = controllerRama.paso;
+        if (ramaPaso)
         {
+            Debug.Log("qwe");
             StartCoroutine(Seguir());
         }
         else
@@ -66,7 +74,6 @@ public class MainObstaculos : MonoBehaviour
             StartCoroutine(Retroceder());
         }
     }
-
     IEnumerator Seguir()
     {
         yield return new WaitForSeconds(0.8f);

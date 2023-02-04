@@ -17,12 +17,12 @@ public class SliderController : MonoBehaviour
     //variable para saber si se detiene el slider
     public bool detenerse;
     [HideInInspector]
-    public bool fallo;
+    public bool pasar;
     public bool init;
 
     private void Update()
     {
-        if (detenerse == true && init)
+        if (detenerse == true)
         {
             //this.GetComponent<Slider>().wholeNumbers = true;
 
@@ -30,21 +30,21 @@ public class SliderController : MonoBehaviour
             switch (valor)
             {
                 case float n when (n >= 0 && n <= 10):
-                    fallo = true;
+                    pasar = false;
                     init = false;
                     break;
                 case float n when (n >= 11 && n <= 29):
-                    fallo = false;
+                    pasar = true;
                     init = false;
                     break;
                 case float n when (n >= 31 && n <= 40):
-                    fallo = true;
+                    pasar = false;
                     init = false;
                     break;
 
             }
         }
-        else if (detenerse == false)
+        else if (detenerse == false && init)
         {
             //todo eso es ppara que el slider se mueva
             if (fin == false)
