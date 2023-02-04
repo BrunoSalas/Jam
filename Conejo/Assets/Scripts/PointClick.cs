@@ -11,6 +11,14 @@ public class PointClick : MonoBehaviour
     public bool llendo;
     public int maximoPasos;
     int pasosHechos;
+    [HideInInspector]
+    public GameObject siguiente;
+    [HideInInspector]
+    public GameObject anterior;
+    [HideInInspector]
+    public Vector3 siguienteVec;
+    [HideInInspector]
+    public Vector3 anteriorVec;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +36,15 @@ public class PointClick : MonoBehaviour
             {
                 if(hit.collider.gameObject == player.zona.GetComponent<Zonas>().zonas[i])
                 {
+                    anterior = player.zona;
+                    anteriorVec = player.zona.transform.position;
                     if (!llendo)
                     {
                         pasosHechos++;
                         Instantiate(lugar, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + y, hit.collider.transform.position.z), Quaternion.identity);
                         player.navMesh.SetDestination(hit.collider.transform.position);
+                        siguiente = hit.collider.gameObject;
+                        siguienteVec = hit.collider.transform.position;
                     }
                 }
                 else

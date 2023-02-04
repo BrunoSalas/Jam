@@ -10,6 +10,7 @@ public class Destroy : MonoBehaviour
     {
         point = GameObject.FindGameObjectWithTag("MainCamera");
         point.GetComponent<PointClick>().llendo = true;
+        Destroy(gameObject,4f);
     }
 
     // Update is called once per frame
