@@ -518,6 +518,7 @@ MonoBehaviour:
   y: 1
   player: {fileID: 1053502467}
   llendo: 0
+  maximoPasos: 20
 --- !u!1 &1053502461
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,6 +655,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMesh: {fileID: 0}
   zanahoria: 0
+  suelo:
+    serializedVersion: 2
+    m_Bits: 8
+  zona: {fileID: 0}
 --- !u!54 &1053502468
 Rigidbody:
   m_ObjectHideFlags: 0

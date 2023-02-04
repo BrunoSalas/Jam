@@ -9,6 +9,8 @@ public class PointClick : MonoBehaviour
     public float y;
     public Player player;
     public bool llendo;
+    public int maximoPasos;
+    int pasosHechos;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +22,29 @@ public class PointClick : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Input.GetMouseButtonDown(1) && Physics.Raycast(ray,out hit,Mathf.Infinity,camino))
+        if(Input.GetMouseButtonDown(1) && Physics.Raycast(ray,out hit,Mathf.Infinity,camino) && pasosHechos < maximoPasos)
         {
-            if (!llendo)
+            for (int i = 0; i < player.zona.GetComponent<Zonas>().zonas.Length; i++)
             {
-                Instantiate(lugar, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + y, hit.collider.transform.position.z), Quaternion.identity);
-                player.navMesh.SetDestination(hit.collider.transform.position);
+                if(hit.collider.gameObject == player.zona.GetComponent<Zonas>().zonas[i])
+                {
+                    if (!llendo)
+                    {
+                        pasosHechos++;
+                        Instantiate(lugar, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + y, hit.collider.transform.position.z), Quaternion.identity);
+                        player.navMesh.SetDestination(hit.collider.transform.position);
+                    }
+                }
+                else
+                {
+                    Debug.Log("aqui no");
+                }
             }
+           
+        }
+        else if(pasosHechos == maximoPasos)
+        {
+            Debug.Log("pasos terminados");
         }
     }
 }

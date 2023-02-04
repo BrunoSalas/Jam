@@ -18,9 +18,17 @@ public class Zonas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!encima && !cerca)
+            gameObject.layer = LayerMask.NameToLayer("Ignorar");
+        else
+            StartCoroutine(LayerAsign());
     }
-    
 
+    IEnumerator LayerAsign()
+    {
+        yield return new WaitForSeconds(2);
+        gameObject.layer = LayerMask.NameToLayer("Punto");
+    }
     public IEnumerator NeblinaFadeIn()
     {
         yield return new WaitForSeconds(1f);
@@ -42,7 +50,7 @@ public class Zonas : MonoBehaviour
     }
     public IEnumerator NeblinaFadeOn()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.8f);
         foreach (GameObject nieblas in zonas)
         {
             if (!cerca && !nieblas.GetComponent<Zonas>().encima)
