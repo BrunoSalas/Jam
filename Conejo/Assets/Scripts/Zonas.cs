@@ -9,6 +9,8 @@ public class Zonas : MonoBehaviour
     public GameObject niebla;
     public bool encima;
     public bool cerca;
+    public bool mitad;
+    bool una;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +21,48 @@ public class Zonas : MonoBehaviour
     void Update()
     {
         if (!encima && !cerca)
+        {
             gameObject.layer = LayerMask.NameToLayer("Ignorar");
+            StartCoroutine(NeblinaFadeOn());
+        }
         else
             StartCoroutine(LayerAsign());
+        if (encima)
+        {
+            niebla.GetComponent<ParticleSystem>().loop = false;
+
+            foreach (GameObject nieblas in zonas)
+            {
+                nieblas.GetComponent<Zonas>().cerca = true;
+            }
+        }
+        else
+        {
+            foreach (GameObject nieblas in zonas)
+            {
+                if (una == false)
+                {
+                    una = nieblas.GetComponent<Zonas>().encima;
+                    if (una)
+                    {
+                        cerca = true;
+                        niebla.GetComponent<ParticleSystem>().loop = false;
+                        StartCoroutine(ui());
+                    }
+                    else
+                    {
+                        
+                        StartCoroutine(NeblinaFadeOn());
+                    }
+                }
+                if (cerca)
+                {
+
+                    StartCoroutine(ai(nieblas));
+                }
+            }
+        }
+
     }
 
     IEnumerator LayerAsign()
@@ -29,50 +70,45 @@ public class Zonas : MonoBehaviour
         yield return new WaitForSeconds(2);
         gameObject.layer = LayerMask.NameToLayer("Camino");
     }
-    public IEnumerator NeblinaFadeIn()
+    public IEnumerator NeblinaFadeOn()
+    {
+        yield return new WaitForSeconds(0.6f);
+        if (!mitad)
+        {
+            if (!cerca && !encima &&
+                !niebla.GetComponent<ParticleSystem>().loop)
+            {
+                niebla.GetComponent<ParticleSystem>().loop = true;
+                niebla.GetComponent<ParticleSystem>().Play();
+            }
+        }
+        yield return null;
+
+    }
+    IEnumerator ai(GameObject niebla)
     {
         yield return new WaitForSeconds(1f);
-        if (encima && !cerca)
+        if(niebla.GetComponent<Zonas>().encima)
         {
-            foreach (GameObject nieblas in zonas)
-            {
-                nieblas.GetComponent<Zonas>().cerca = true;
-                nieblas.GetComponent<Zonas>().niebla.GetComponent<ParticleSystem>().loop = false;
-            }
+            cerca = true;
         }
         else
         {
-            //niebla.GetComponent<ParticleSystem>().loop = true;
-            //niebla.GetComponent<ParticleSystem>().Play();
+            cerca = false;
         }
-
-        yield return null;
     }
-    public IEnumerator NeblinaFadeOn()
+    IEnumerator ui()
     {
-        yield return new WaitForSeconds(1.8f);
-        foreach (GameObject nieblas in zonas)
-        {
-            if (!cerca && !nieblas.GetComponent<Zonas>().encima)
-            {
-                nieblas.GetComponent<Zonas>().cerca = false;
-                nieblas.GetComponent<Zonas>().niebla.GetComponent<ParticleSystem>().loop = true;
-                nieblas.GetComponent<Zonas>().niebla.GetComponent<ParticleSystem>().Play();
-                Debug.Log(gameObject.name);
-            }
-        }
+        yield return new WaitForSeconds(1f);
+        una = false;
 
-        yield return null;
     }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             encima = true;
             cerca = false;
-            niebla.GetComponent<ParticleSystem>().loop = false; 
-            StartCoroutine(NeblinaFadeIn());
         }
     }
     private void OnTriggerExit(Collider other)
@@ -80,7 +116,7 @@ public class Zonas : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             encima = false;
-            StartCoroutine(NeblinaFadeOn());
+           // StartCoroutine(NeblinaFadeOn());
         }
     }
 

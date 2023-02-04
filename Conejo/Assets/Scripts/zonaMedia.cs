@@ -15,23 +15,22 @@ public class zonaMedia : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    }
-    public IEnumerator NeblinaFadeIn()
-    {
-        yield return new WaitForSeconds(1f);
-        if (encima)
+        if(encima)
         {
             foreach (GameObject nieblas in zonas)
             {
-                nieblas.GetComponent<Zonas>().cerca = true;
+                nieblas.GetComponent<Zonas>().mitad = true;
                 nieblas.GetComponent<Zonas>().niebla.GetComponent<ParticleSystem>().loop = false;
             }
         }
-        else
+    }
+    public IEnumerator NeblinaFadeIn()
+    {
+        foreach (GameObject nieblas in zonas)
         {
-            //niebla.GetComponent<ParticleSystem>().loop = true;
-            //niebla.GetComponent<ParticleSystem>().Play();
+            nieblas.GetComponent<Zonas>().mitad = false;
         }
+        
 
         yield return null;
     }
@@ -40,7 +39,6 @@ public class zonaMedia : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             encima = true;
-            StartCoroutine(NeblinaFadeIn());
         }
     }
     private void OnTriggerExit(Collider other)
@@ -48,6 +46,7 @@ public class zonaMedia : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             encima = false;
+            StartCoroutine(NeblinaFadeIn());
         }
     }
 }
