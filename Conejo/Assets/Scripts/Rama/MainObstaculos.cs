@@ -108,7 +108,6 @@ public class MainObstaculos : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         ramaPaso = controllerRama.paso;
         tierraPaso = controllerExcarvar.paso;
-        raizPaso = controllerCountRoot.paso;
         if (ramaPaso || tierraPaso)
         {
             Debug.Log("qwe");
@@ -129,6 +128,7 @@ public class MainObstaculos : MonoBehaviour
         player.navMesh.speed = 3.5f;
         GameObject lugar = Instantiate(pointClick.lugar, new Vector3(pointClick.siguienteVec.x, pointClick.siguienteVec.y + 1, pointClick.siguienteVec.z), Quaternion.identity);
         player.navMesh.SetDestination(lugar.transform.position);
+        controllerCountRoot.Reset();
     }
     IEnumerator Retroceder()
     {
@@ -136,5 +136,6 @@ public class MainObstaculos : MonoBehaviour
         player.navMesh.speed = 3.5f;
        GameObject lugar =  Instantiate(pointClick.lugar,  new Vector3(pointClick.anteriorVec.x, pointClick.anteriorVec.y + 1, pointClick.anteriorVec.z), Quaternion.identity);
         player.navMesh.SetDestination(lugar.transform.position);
+        controllerCountRoot.Reset();
     }
 }

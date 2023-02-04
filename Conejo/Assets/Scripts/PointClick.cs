@@ -32,16 +32,15 @@ public class PointClick : MonoBehaviour
         RaycastHit hit;
         if(Input.GetMouseButtonDown(1) && Physics.Raycast(ray,out hit,Mathf.Infinity,camino) && pasosHechos < maximoPasos)
         {
+            pasosHechos++;
             for (int i = 0; i < player.zona.GetComponent<Zonas>().zonas.Length; i++)
             {
-                Debug.Log(hit.collider.name);
                 if(hit.collider.gameObject == player.zona.GetComponent<Zonas>().zonas[i])
                 {
                     anterior = player.zona;
                     anteriorVec = player.zona.transform.position;
                     if (!llendo)
                     {
-                        pasosHechos++;
                         Instantiate(lugar, new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y + y, hit.collider.transform.position.z), Quaternion.identity);
                         player.navMesh.SetDestination(hit.collider.transform.position);
                         siguiente = hit.collider.gameObject;

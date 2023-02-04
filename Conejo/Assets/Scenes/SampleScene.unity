@@ -3683,7 +3683,7 @@ MonoBehaviour:
   dosGameObject: {fileID: 2012040373}
   tresGameObject: {fileID: 109434402}
   cuatroGameObject: {fileID: 1804345765}
-  paso: 0
+  pasoAtras: 0
   init: 0
   softened: 3
   mainObstaculos: {fileID: 2064759706}

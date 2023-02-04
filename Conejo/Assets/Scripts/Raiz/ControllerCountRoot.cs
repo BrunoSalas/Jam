@@ -13,7 +13,7 @@ public class ControllerCountRoot : MonoBehaviour
     public GameObject dosGameObject;
     public GameObject tresGameObject;
     public GameObject cuatroGameObject;
-    public bool paso;
+    public bool pasoAtras;
     public bool init;
     public float softened = 3;
     bool desaparecer;
@@ -31,52 +31,26 @@ public class ControllerCountRoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (init)
+        if (GetComponent<CanvasGroup>().alpha > 0)
         {
-            if (GetComponent<CanvasGroup>().alpha > 0)
-            {
-                
-                if (uno && !dos && !tres && !cuatro)
-                {
-                    fase1 = true;
-                }
-                else if(dos || tres || cuatro && !uno)
-                {
-                    paso = false;
-                }
-                if (dos && !tres && !cuatro && uno)
-                {
-                    fase2 = true;
-                }
-                else if (!dos || tres || cuatro && !uno)
-                {
-                    paso = false; 
-                }
-                if (tres && !cuatro && uno && dos)
-                {
-                    fase3 = true;
-                }
-                else if (!dos || !tres || cuatro && !uno)
-                {
-                    paso = false; 
-                }
-                if (cuatro && tres && dos && uno && fase1 && fase2 && fase3)
-                {
-                    paso = true;
-                    fase4 = true;
-                    desaparecer = true;
-                }
-                else
-                {
-                    paso = false; 
-                }
-            }
-            if(fase4 && desaparecer)
+            if (fase4)
             {
                 DisappearObstacule();
                 StartCoroutine(Destroy());
             }
+            if (pasoAtras)
+            {
+                DisappearObstacule();
+                mainObstaculos.Comprobante();
+                init = false;   desaparecer = true;
+            }
+            if(desaparecer)
+            {
+
+                DisappearObstacule();
+            }
         }
+        
         if(GetComponent<CanvasGroup>().alpha < 0)
         {
             GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -97,6 +71,7 @@ public class ControllerCountRoot : MonoBehaviour
         if (alphatierra <= 0.1f)
         {
             alphatierra = 0f;
+            pasoAtras = false;
             desaparecer = false;
         }
         //alphaText.a = 0f;
@@ -105,19 +80,50 @@ public class ControllerCountRoot : MonoBehaviour
     }
     public void Uno()
     {
-        uno = true;
+        if (init)
+        {
+            uno = true;
+            fase1 = true;
+        }
     }
     public void Dos()
     {
-        dos = true;
+        if (init)
+        {
+            if (uno)
+            {
+                dos = true;
+                fase2 = true;
+            }
+            else
+                pasoAtras = true;
+        }
     }
     public void Tres()
     {
-        tres = true;
+        if (init)
+        {
+            if (dos && uno)
+            {
+                tres = true;
+                fase3 = true;
+            }
+            else
+                pasoAtras = true;
+        }
     }
     public void Cuatro()
     {
-        cuatro = true;
+        if (init)
+        {
+            if (dos && tres && uno)
+            {
+                cuatro = true;
+                fase4 = true;
+            }
+            else
+                pasoAtras = true;
+        }
     }
 
     public void Reset()
