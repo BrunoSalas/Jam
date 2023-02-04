@@ -18,6 +18,8 @@ public class MainObstaculos : MonoBehaviour
     bool ramaPaso;
     [SerializeField]
     bool tierraPaso;
+    [SerializeField]
+    bool raizPaso;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +49,7 @@ public class MainObstaculos : MonoBehaviour
     {
         var alphaRaiz = controllerCountRoot.GetComponent<CanvasGroup>().alpha;
 
-        alphaRaiz = Mathf.Lerp(alphaRaiz, 1f, controllerExcarvar.softened * Time.deltaTime);
+        alphaRaiz = Mathf.Lerp(alphaRaiz, 1f, controllerCountRoot.softened * Time.deltaTime);
 
         if (alphaRaiz >= 0.8f)
         {
@@ -106,9 +108,13 @@ public class MainObstaculos : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         ramaPaso = controllerRama.paso;
         tierraPaso = controllerExcarvar.paso;
+        raizPaso = controllerCountRoot.paso;
         if (ramaPaso || tierraPaso)
         {
             Debug.Log("qwe");
+            StartCoroutine(Seguir());
+        } if(controllerCountRoot.fase1 && controllerCountRoot.fase2 && controllerCountRoot.fase3 && controllerCountRoot.fase4)
+        {
             StartCoroutine(Seguir());
         }
         else
