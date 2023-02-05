@@ -8,7 +8,7 @@ public class IAConejo : MonoBehaviour
     public Conejos conejos;
     GameObject playerObject;
     Player player;
-    public GameObject canvas;
+    //public GameObject canvas;
     public Camera camera;
     public float duracion;
     public float destruccion;
@@ -73,10 +73,14 @@ public class IAConejo : MonoBehaviour
                         faltaKion = true;
                     }
                 }
+                if(conejos.tipos == Conejos.Tipos.Blanco)
+                {
+                    StartCoroutine(Destroy());
+                }
                 if (faltaKion || faltaVeterrag || faltaZanaho)
                 {
                     camera.gameObject.SetActive(true);
-                    canvas.gameObject.SetActive(true);
+                    //canvas.gameObject.SetActive(true);
                     faltaZanaho = false;
                     faltaVeterrag = false;
                     faltaKion = false;
@@ -91,6 +95,7 @@ public class IAConejo : MonoBehaviour
         {
 
             cerca = true;
+            if(conejos.tipos != Conejos.Tipos.Blanco)
             StartCoroutine(Cambio());
         }
     }
@@ -106,12 +111,13 @@ public class IAConejo : MonoBehaviour
     {
         yield return new WaitForSeconds(duracion);
         camera.gameObject.SetActive(false);
-        canvas.gameObject.SetActive(false);
+      //  canvas.gameObject.SetActive(false);
 
 
     }
     IEnumerator Destroy()
     {
+        player.conejos++;
         yield return new WaitForSeconds(destruccion);
         Destroy(gameObject);
     }

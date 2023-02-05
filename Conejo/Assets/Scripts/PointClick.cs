@@ -10,7 +10,7 @@ public class PointClick : MonoBehaviour
     public Player player;
     public bool llendo;
     public int maximoPasos;
-    int pasosHechos;
+    public int pasosHechos;
     [HideInInspector]
     public GameObject siguiente;
     [HideInInspector]
@@ -35,6 +35,7 @@ public class PointClick : MonoBehaviour
             pasosHechos++;
             for (int i = 0; i < player.zona.GetComponent<Zonas>().zonas.Length; i++)
             {
+                Debug.Log(hit.collider.name);
                 if(hit.collider.gameObject == player.zona.GetComponent<Zonas>().zonas[i])
                 {
                     anterior = player.zona;
@@ -45,16 +46,23 @@ public class PointClick : MonoBehaviour
                         player.navMesh.SetDestination(hit.collider.transform.position);
                         siguiente = hit.collider.gameObject;
                         siguienteVec = hit.collider.transform.position;
+                        break;
                     }
                 }
                 else
                 {
+                    
                     Debug.Log("aqui no");
+                    Debug.Log(hit.collider.name);
                 }
             }
            
         }
-        else if(pasosHechos == maximoPasos)
+        else if(Input.GetMouseButtonDown(1) && !Physics.Raycast(ray, out hit, Mathf.Infinity, camino))
+        {
+            Debug.Log("a bueno");
+        }
+        if(pasosHechos == maximoPasos)
         {
             Debug.Log("pasos terminados");
         }

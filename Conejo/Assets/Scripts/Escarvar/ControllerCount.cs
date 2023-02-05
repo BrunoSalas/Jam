@@ -52,7 +52,7 @@ public class ControllerCount : MonoBehaviour
         if (count < countMax && time < timerMax && init)
         {
             count++;
-            barra.transform.localScale += new Vector3(0.1f, 0, 0);
+            barra.transform.localScale += new Vector3(0.3f, 0, 0);
             player.tierra.transform.localScale -= new Vector3(0, 0, 0.3f);
         }
 

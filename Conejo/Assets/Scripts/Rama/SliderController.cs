@@ -29,15 +29,15 @@ public class SliderController : MonoBehaviour
             //switch para que debe dar un valor segun que parte de la barra esta 
             switch (valor)
             {
-                case float n when (n >= 0 && n <= 10):
+                case float n when (n >= 0 && n <= 15):
                     pasar = false;
                     init = false;
                     break;
-                case float n when (n >= 11 && n <= 29):
+                case float n when (n >= 16 && n <= 41):
                     pasar = true;
                     init = false;
                     break;
-                case float n when (n >= 31 && n <= 40):
+                case float n when (n >= 42 && n <= 60):
                     pasar = false;
                     init = false;
                     break;

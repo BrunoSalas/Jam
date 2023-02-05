@@ -36,17 +36,24 @@ public class Zonas : MonoBehaviour
                 nieblas.GetComponent<Zonas>().cerca = true;
             }
         }
+        if(cerca || mitad)
+        {
+
+            niebla.GetComponent<ParticleSystem>().loop = false;
+        }
         else
         {
-            foreach (GameObject nieblas in zonas)
+            for (int i = 0; i < zonas.Length; i++)
             {
+            
                 if (una == false)
                 {
-                    una = nieblas.GetComponent<Zonas>().encima;
+                    una = GetComponent<Zonas>().encima;
                     if (una)
                     {
                         cerca = true;
                         niebla.GetComponent<ParticleSystem>().loop = false;
+                        niebla.GetComponent<ParticleSystem>().Stop();
                         StartCoroutine(ui());
                     }
                     else
@@ -54,11 +61,6 @@ public class Zonas : MonoBehaviour
                         
                         StartCoroutine(NeblinaFadeOn());
                     }
-                }
-                if (cerca)
-                {
-
-                    StartCoroutine(ai(nieblas));
                 }
             }
         }
@@ -85,17 +87,18 @@ public class Zonas : MonoBehaviour
         yield return null;
 
     }
-    IEnumerator ai(GameObject niebla)
+    IEnumerator ai()
     {
-        yield return new WaitForSeconds(1f);
-        if(niebla.GetComponent<Zonas>().encima)
+        yield return new WaitForSeconds(1.5f);
+        if (!mitad)
         {
-            cerca = true;
+            foreach (GameObject nieblas in zonas)
+            {
+                nieblas.GetComponent<Zonas>().cerca = false;
+            }
         }
-        else
-        {
-            cerca = false;
-        }
+        
+        
     }
     IEnumerator ui()
     {
@@ -116,7 +119,7 @@ public class Zonas : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             encima = false;
-           // StartCoroutine(NeblinaFadeOn());
+            StartCoroutine(ai());
         }
     }
 

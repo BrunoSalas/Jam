@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ControllerRama : MonoBehaviour
 {
     public SliderController sliderController;
+    GameObject asd;
+    MainObstaculos mainObstaculos;
     GameObject playerObject;
     Player player;
     [HideInInspector]
@@ -17,6 +19,8 @@ public class ControllerRama : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        asd = GameObject.FindGameObjectWithTag("MainObstacule");
+        mainObstaculos = asd.GetComponent<MainObstaculos>();
         rama = GetComponent<CanvasGroup>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
         player = playerObject.GetComponent<Player>();
@@ -29,7 +33,10 @@ public class ControllerRama : MonoBehaviour
         {
             paso = sliderController.pasar;
             if (paso)
+            {
+                mainObstaculos.Comprobante();
                 StartCoroutine(Destroy());
+            }
 
 
         }
@@ -63,6 +70,7 @@ public class ControllerRama : MonoBehaviour
             alphaRama = 0f;
             desaparecer = false;
             sliderController.detenerse = false;
+
         }
         //alphaText.a = 0f;
         rama.GetComponent<CanvasGroup>().alpha = alphaRama;

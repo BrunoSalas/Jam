@@ -20,10 +20,14 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public GameObject raiz;
     public int vida;
+    [SerializeField]
     MainObstaculos mainObstaculos;
+
+    public int conejos;
     // Start is called before the first frame update
     void Start()
     {
+        vida = 3;
         navMesh = GetComponent<NavMeshAgent>();
         mainObstac = GameObject.FindGameObjectWithTag("MainObstacule");
         mainObstaculos = mainObstac.GetComponent<MainObstaculos>();
@@ -88,6 +92,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Hazard"))
         {
             vida--;
+            Destroy(other.gameObject);
         }
     }
     private void OnTriggerExit(Collider other)
